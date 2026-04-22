@@ -6,6 +6,10 @@ Interactive TUI file picker that concatenates selected files and copies them to 
 
 ## Install
 
+Download a prebuilt binary for macOS, Linux, or Windows from the [latest release](https://github.com/abhignan-rakshith/ccopy/releases/latest).
+
+Or with Go:
+
 ```sh
 go install github.com/abhignan-rakshith/ccopy/cmd/ccopy@latest
 ```
