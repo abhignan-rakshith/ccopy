@@ -12,6 +12,7 @@ import (
 	"github.com/abhignan-rakshith/ccopy/internal/formatter"
 	"github.com/abhignan-rakshith/ccopy/internal/tree"
 	"github.com/abhignan-rakshith/ccopy/internal/tui"
+	"github.com/abhignan-rakshith/ccopy/internal/util"
 )
 
 var version = "0.1.0-dev"
@@ -105,7 +106,7 @@ func run(a runArgs) error {
 		}
 		return nil
 	}
-	fmt.Printf("✓ Copied %d files (%s) to clipboard\n", len(result.Files), humanSize(result.TotalSize))
+	fmt.Printf("✓ Copied %d files (%s) to clipboard\n", len(result.Files), util.HumanSize(result.TotalSize))
 	return nil
 }
 
@@ -121,18 +122,6 @@ func allSelectableFiles(n *tree.Node) []string {
 	return out
 }
 
-func humanSize(n int64) string {
-	const unit = 1024
-	if n < unit {
-		return fmt.Sprintf("%d B", n)
-	}
-	div, exp := int64(unit), 0
-	for v := n / unit; v >= unit; v /= unit {
-		div *= unit
-		exp++
-	}
-	return fmt.Sprintf("%.1f %cB", float64(n)/float64(div), "KMGT"[exp])
-}
 
 func usage() {
 	fmt.Fprintf(os.Stderr, `ccopy — interactive TUI file picker that copies concatenated file contents to the clipboard.

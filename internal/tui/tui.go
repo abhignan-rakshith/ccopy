@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
+
+	"github.com/abhignan-rakshith/ccopy/internal/util"
 	"github.com/charmbracelet/lipgloss"
 
 	"github.com/abhignan-rakshith/ccopy/internal/formatter"
@@ -364,7 +366,7 @@ func (m *Model) View() string {
 	if m.mode == modeConfirmLarge && m.confirmNode != nil {
 		fmt.Fprintln(&b, styleLarge.Render(fmt.Sprintf(
 			"File is %s (over limit). Select anyway? [y/N]",
-			humanSize(m.confirmNode.Size),
+			util.HumanSize(m.confirmNode.Size),
 		)))
 	}
 
@@ -377,7 +379,7 @@ func (m *Model) View() string {
 	}
 	hint := "space:select  enter:copy  /:filter  ?:help  q:quit"
 	fmt.Fprintf(&b, "%s  %s",
-		styleStatus.Render(fmt.Sprintf("%d files  %s", m.selection.Len(), humanSize(total))),
+		styleStatus.Render(fmt.Sprintf("%d files  %s", m.selection.Len(), util.HumanSize(total))),
 		styleHint.Render(hint))
 
 	return b.String()
@@ -397,7 +399,7 @@ func (m *Model) renderRow(n *tree.Node) string {
 		}
 		name = styleDir.Render(name)
 	} else {
-		size = "  " + styleStatus.Render(humanSize(n.Size))
+		size = "  " + styleStatus.Render(util.HumanSize(n.Size))
 	}
 	line := fmt.Sprintf("%s%s %s %s%s", indent, box, icon, name, size)
 	switch {
@@ -463,16 +465,5 @@ func nodeDepth(n, root *tree.Node) int {
 	return d
 }
 
-func humanSize(n int64) string {
-	const unit = 1024
-	if n < unit {
-		return fmt.Sprintf("%d B", n)
-	}
-	div, exp := int64(unit), 0
-	for v := n / unit; v >= unit; v /= unit {
-		div *= unit
-		exp++
-	}
-	return fmt.Sprintf("%.1f %cB", float64(n)/float64(div), "KMGT"[exp])
-}
+
 

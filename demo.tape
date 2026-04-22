@@ -12,7 +12,7 @@ Set Padding 12
 
 Output demo.gif
 
-Env PATH "/Users/abhimacmini/go/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+Env PATH "$HOME/go/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
 Type "cd /tmp/ccopy-demo && ccopy"
 Sleep 400ms
